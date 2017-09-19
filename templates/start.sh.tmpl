@@ -1,0 +1,56 @@
+#!/bin/bash
+
+first_node={{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}
+hostname=`hostname`
+
+mkdir -p /opt/trafodion/.ssh/
+cp /root/.ssh/id_rsa /opt/trafodion/.ssh/
+chmod 700 /opt/trafodion/.ssh/id_rsa
+chown trafodion:trafodion -R /opt/trafodion/.ssh/
+
+if [[ $first_node == $hostname ]]; then
+    service mysqld start
+    if [[ ! -e /data/nn/current/VERSION ]]; then
+        su - trafodion -c 'hdfs namenode -format'
+    fi
+
+    if [[ ! -e /opt/trafodion/esgynDB-2.3.0/sql/scripts/sqconfig.db ]]; then
+        su - trafodion -c sqgen
+    fi
+
+    echo "Starting Hadoop Services ..."
+    su - trafodion -c "/opt/zookeeper/bin/zookeeper-server start"
+    su - trafodion -c "/opt/hadoop/sbin/start-dfs.sh"
+    su - trafodion -c "/opt/hbase/bin/start-hbase.sh"
+    su - trafodion -c "nohup /opt/hive/bin/hive --service metastore > /var/log/hive/hive_metastore.log 2>&1 &"
+
+    echo "Set HDFS permissions ..."
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfsadmin -safemode wait"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -mkdir -p /user/trafodion/{trafodion_backups,bulkload,lobs} /hbase/archive"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -chown -R trafodion:trafodion /hbase/archive"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -chown -R trafodion:trafodion /user/trafodion /user/trafodion/{trafodion_backups,bulkload,lobs}"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -chmod 0755 /user/trafodion"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -chmod 0750 /user/trafodion/{trafodion_backups,bulkload,lobs}"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -setfacl -R -m user:trafodion:rwx /hbase/archive"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -setfacl -R -m default:user:trafodion:rwx /hbase/archive"
+    su - trafodion -c "/opt/hadoop/bin/hdfs dfs -setfacl -R -m mask::rwx /hbase/archive"
+
+    echo "Init OpenTSDB tables ..."
+    su - trafodion -c "/opt/trafodion/esgynDB-2.3.0/mgblty/opentsdb/tools/check_tables.sh"
+    su - trafodion -c "/opt/trafodion/esgynDB-2.3.0/mgblty/opentsdb/tools/registerMetrics.py"
+
+    echo "Starting EsgynDB Services ..."
+    su - trafodion -c trafstart
+    TMP_LOG="/tmp/initialize_trafodion.log"
+    su - trafodion -c "echo 'initialize trafodion;' | sqlci" > $TMP_LOG
+    INIT_FLAG=`grep -c 1392 $TMP_LOG`
+    if [[ $INIT_FLAG -eq 1 ]]; then
+        su - trafodion -c connstart
+    else
+        su - trafodion -c "echo 'initialize trafodion;' | sqlci"
+        su - trafodion -c "echo 'initialize trafodion, add tenant usage;' | sqlci"
+        su - trafodion -c "echo 'initialize trafodion, upgrade library management;' | sqlci"
+        su - trafodion -c connstart
+    fi
+    rm -rf $TMP_LOG
+fi

@@ -1,0 +1,29 @@
+#!/bin/bash
+first_node={{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}
+hostname=`hostname`
+
+# check ZK/HIVE on first node
+if [[ $first_node == $hostname ]]; then
+    zk_cnt=`ps -eo cmd |grep 'QuorumPeerMain'|egrep -v 'grep' |wc -l`
+    if [[ $zk_cnt -eq 0 ]]; then
+        echo "Zookeeper process is not started"
+        exit 1
+    fi
+    hive_cnt=`ps -eo cmd |grep 'HiveMetaStore'|egrep -v 'grep' |wc -l`
+    if [[ $hive_cnt -eq 0 ]]; then
+        echo "Hive MetaStore process is not started"
+        exit 1
+    fi
+fi
+
+rs_cnt=`ps -eo cmd |grep 'HRegionServer'|egrep -v 'grep' |wc -l`
+if [[ $rs_cnt -eq 0 ]]; then
+    echo "HBase RegionServer process is not started"
+    exit 1
+fi
+
+mon_cnt=`ps -eo cmd |grep 'monitor COLD'|egrep -v 'grep|mpirun' |wc -l`
+if [[ $mon_cnt -eq 0 ]]; then
+    echo "Monitor process is not started"
+    exit 1
+fi

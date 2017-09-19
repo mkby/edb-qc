@@ -1,0 +1,7 @@
+[template]
+src = "stop.sh.tmpl"
+dest = "/opt/bin/stop.sh"
+mode = "0755"
+keys = [
+    "/",
+]

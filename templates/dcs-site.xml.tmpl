@@ -1,0 +1,22 @@
+<configuration>
+  <property>
+    <name>dcs.zookeeper.property.clientPort</name>
+    <value>2181</value>
+  </property>
+  <property>
+    <name>dcs.zookeeper.quorum</name>
+    <value>{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}</value>
+  </property>
+  <property>
+    <name>dcs.dns.interface</name>
+    <value>eth0</value>
+  </property>
+  <property>
+    <name>dcs.master.port</name>
+    <value>{{getv "/env/dcs.master.port" "23400"}}</value>
+  </property>
+  <property>
+    <name>dcs.master.info.port</name>
+    <value>{{getv "/env/dcs.master.info.port" "24400"}}</value>
+  </property>
+</configuration>

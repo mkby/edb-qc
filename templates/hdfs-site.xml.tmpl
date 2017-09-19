@@ -1,0 +1,34 @@
+<configuration>
+  <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>dfs.datanode.max.transfer.threads</name>
+    <value>40960</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>/data/nn</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/data/dn</value>
+  </property>
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>dfs.namenode.handler.count</name>
+    <value>10</value>
+  </property>
+  <property>
+    <name>dfs.datanode.handler.count</name>
+    <value>{{getv "/env/dfs.datanode.handler.count" "10"}}</value>
+  </property>
+  <property>
+    <name>dfs.namenode.acls.enabled</name>
+    <value>true</value>
+  </property>
+</configuration>

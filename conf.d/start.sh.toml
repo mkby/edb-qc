@@ -1,0 +1,7 @@
+[template]
+src = "start.sh.tmpl"
+dest = "/opt/bin/start.sh"
+mode = "0755"
+keys = [
+    "/",
+]

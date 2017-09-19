@@ -1,0 +1,8 @@
+[template]                                                                                                                                                                                                 
+src = "slaves.tmpl"
+dest = "/opt/hadoop/etc/hadoop/slaves"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]

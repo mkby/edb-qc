@@ -1,0 +1,26 @@
+export TRAF_HOME="/opt/trafodion/esgynDB-2.3.0"
+export TRAF_VAR=$TRAF_HOME/tmp
+export MY_SQROOT=$TRAF_HOME # for compatibility
+export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk.x86_64"
+export node_count="{{lsdir "/hosts/datanode"|len}}"
+export HADOOP_TYPE="apache"
+export ENABLE_HA="false"
+export ZOOKEEPER_NODES="{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}"
+export ZOOKEEPER_PORT="2181"
+export SECURE_HADOOP="N"
+export CLUSTERNAME="{{getv "/host/instance_id"}}"
+
+export hbase_xml_file="/opt/hbase/conf/hbase-site.xml"
+export hbase_lib_path="/opt/hbase/lib"
+export traf_user="trafodion"
+export traf_version="2.3.0"
+export scratch_locs="$TRAF_VAR"
+
+export HADOOP_PREFIX=/opt/hadoop
+export HBASE_HOME=/opt/hbase
+export HIVE_HOME=/opt/hive
+export PATH=$PATH:$HADOOP_PREFIX/bin:$HADOOP_PREFIX/sbin:$HBASE_HOME/bin:$HIVE_HOME/bin
+
+export PATH=$PATH:/opt/trafodion/esgynDB-2.3.0/mgblty/jython2.7.0/bin
+export MGBLTY_INSTALL_DIR=/opt/trafodion/esgynDB-2.3.0/mgblty
+export DBMGR_INSTALL_DIR=/opt/trafodion/esgynDB-2.3.0/dbmgr-2.3.0

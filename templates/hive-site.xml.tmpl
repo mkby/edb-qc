@@ -1,0 +1,30 @@
+<configuration>
+  <property>
+    <name>hive.metastore.uris</name>
+    <value>thrift://{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}:9083</value>
+  </property>
+  <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>hdfs://{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}:9000/hive/warehouse</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionURL</name>
+    <value>jdbc:mysql://{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}:3306/hive?createDatabaseIfNotExist=true</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.jdbc.Driver</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>hive</value>
+  </property>
+  <property>
+    <name>javax.jdo.option.ConnectionPassword</name>
+    <value>hive</value>
+  </property>
+  <property>
+    <name>hive.metastore.local</name>
+    <value>false</value>
+  </property>
+</configuration>

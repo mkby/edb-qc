@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<!-- @@@ START COPYRIGHT @@@
+ 
+     (C) Copyright 2016 Esgyn Corporation
+ 
+     @@@ END COPYRIGHT @@@
+-->
+
+<properties>
+
+        <!-- The JDBC url for the Trafodion/EsgynDB instance that you are connecting to -->
+        <entry key="jdbcUrl">jdbc:t4jdbc://{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}:23400/:</entry>
+
+        <!-- The JDBC driver class name for the Trafodion/EsgynDB JDBC driver -->
+        <entry key="jdbcDriverClass">org.trafodion.jdbc.t4.T4Driver</entry>
+
+        <!--  Minimum number of connections for jdbc connection pool -->
+        <entry key="minPoolSize">1</entry>
+
+        <!--  Max number of connections for jdbc connection pool -->
+        <entry key="maxPoolSize">8</entry>
+
+        <!--  Connection timeout in seconds for jdbc connections -->
+        <entry key="connectionTimeout">60</entry>
+
+        <!--   maxIdleTime in seconds for jdbc connection pool -->
+        <entry key="maxIdleTime">1200</entry>
+
+        <!--  Max number of statements for jdbc statement caching -->
+        <entry key="maxStatementsCache">100</entry>
+
+        <!-- The Admin User ID used by DBManager for its internal queries-->
+        <entry key="adminUserID">admin</entry>
+
+        <!-- The Admin User's password-->
+        <entry key="adminPassword">OBF:1u2a1toa1w8v1tok1u30</entry>
+
+        <!-- The Trafodion REST Server URI -->
+        <entry key="trafodionRestServerUri">http://{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}:4200</entry>
+
+        <!-- Session Timeout in minutes. Your EsgynDB Manager browser session to the server will be
+                time out after this interval and you will be asked to login again -->
+        <entry key="sessionTimeoutMinutes">120</entry>
+
+        <!-- The TimeZone name of the EsgynDB server. Enter in java time zone format like America/New_York -->
+        <entry key="timeZoneName">PRC</entry>
+
+        <!-- The openTSDB HTTP URI-->
+        <entry key="openTSDBUri">http://localhost:5242</entry>
+
+        <!-- The Alerts HTTP URI-->
+        <entry key="alertsUri">http://localhost:8070</entry>
+
+        <!-- Enable/Disable WMS Features-->
+        <entry key="enableWMS">true</entry>
+
+        <!--HTTP read timeout in seconds for external REST calls issued by dbmgr server-->
+        <entry key="httpReadTimeOutSeconds">120</entry>
+
+<!--Multi-tenancy related properties-->
+
+        <!--Minimum number of cores that makes up a compute slice-->
+        <entry key="coresPerSlice">4</entry>
+
+        <!--Minimum memory in GB that makes up a compute slice-->
+        <entry key="memoryGBPerSlice">32</entry>
+
+        <!--Minimum scale factor of compute slices per tenant-->
+        <entry key="minSlicesPerTenant">4</entry>
+
+        <!--Max weight for compute slices per node-->
+        <entry key="maxWeightForSlicesPerNode">4</entry>
+
+<!-- The following properties are only required and used by the embedded jetty server -->
+
+        <!--Enable/Disable HTTPS-->
+        <entry key="enableHTTPS">false</entry>
+
+        <!-- The HTTP Port for the EsgynDB Manager embedded jetty server -->
+        <entry key="httpPort">{{getv "/env/dbmgr.http.port" "4205"}}</entry>
+
+        <!-- The HTTPS Port for the EsgynDB Manager embedded jetty server -->
+        <entry key="httpsPort">4206</entry>
+
+        <!-- The SSL keystore password for the EsgynDB Manager embedded jetty server -->
+        <entry key="securePassword">OBF:1igj1i291l141jn71lmn1lj31jkb1kxy1hzh1idn</entry>
+
+        <!-- The HTTP request header size for the EsgynDB Manager embedded jetty server -->
+        <entry key="requestHeaderSize">98304</entry>
+
+</properties>

@@ -1,0 +1,5 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+{{range $dir := lsdir "/hosts/datanode/"}}{{$ip := printf "/hosts/datanode/%s/ip" $dir}}{{$node := printf "/hosts/datanode/%s/instance_id" $dir}}
+{{getv $ip}} {{getv $node}}{{end}}

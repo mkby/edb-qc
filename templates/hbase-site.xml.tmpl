@@ -1,0 +1,86 @@
+<configuration>
+<property>
+  <name>hbase.snapshot.region.timeout</name>
+  <value>600000</value>
+  </property>
+<property>
+  <name>hbase.hstore.blockingStoreFiles</name>
+  <value>200</value>
+  </property>
+<property>
+  <name>hbase.hregion.impl</name>
+  <value>org.apache.hadoop.hbase.regionserver.transactional.TransactionalRegion</value>
+  </property>
+<property>
+  <name>hbase.hregion.memstore.block.multiplier</name>
+  <value>7</value>
+  </property>
+<property>
+  <name>hbase.rootdir.perms</name>
+  <value>750</value>
+  </property>
+<property>
+  <name>hbase.hregion.memstore.flush.size</name>
+  <value>536870912</value>
+  </property>
+<property>
+  <name>hbase.snapshot.enabled</name>
+  <value>true</value>
+  </property>
+<property>
+  <name>hbase.regionserver.region.split.policy</name>
+  <value>org.apache.hadoop.hbase.regionserver.ConstantSizeRegionSplitPolicy</value>
+  </property>
+<property>
+  <name>hbase.snapshot.master.timeoutMillis</name>
+  <value>600000</value>
+  </property>
+<property>
+  <name>hbase.client.scanner.timeout.period</name>
+  <value>3600000</value>
+  </property>
+  <property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}:9000/hbase</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.clientPort</name>
+    <value>2181</value>
+  </property>
+  <property>
+    <name>hbase.client.scanner.caching</name>
+    <value>100</value>
+  </property>
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hbase.rootdir.perms</name>
+    <value>750</value>
+  </property>
+  <property>
+    <name>hbase.snapshot.enabled</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hbase.snapshot.region.timeout</name>
+    <value>600000</value>
+  </property>
+  <property>
+      <name>hbase.master.handler.count</name>
+      <value>{{getv "/env/hbase.master.handler.count" "25"}}</value>
+  </property>
+  <property>
+    <name>hbase.regionserver.handler.count</name>
+    <value>{{getv "/env/hbase.regionserver.handler.count" "30"}}</value>
+  </property>
+  <property>
+    <name>zookeeper.session.timeout</name>
+    <value>{{getv "/env/zookeeper.session.timeout" "600000"}}</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>{{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}</value>
+  </property>
+</configuration>

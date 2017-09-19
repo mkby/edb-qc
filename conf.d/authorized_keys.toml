@@ -1,0 +1,9 @@
+[template]
+src = "authorized_keys.tmpl"
+dest = "/opt/trafodion/.ssh/authorized_keys"
+uid = 500
+gid = 500
+mode = "0600"
+keys = [
+  "/",
+]

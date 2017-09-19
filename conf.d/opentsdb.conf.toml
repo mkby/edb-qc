@@ -1,0 +1,9 @@
+[template]
+src = "opentsdb.conf.tmpl"
+dest = "/opt/trafodion/esgynDB-2.3.0/mgblty/opentsdb/etc/opentsdb/opentsdb.conf"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]
+reload_cmd="/opt/bin/restart-dbmgr.sh"

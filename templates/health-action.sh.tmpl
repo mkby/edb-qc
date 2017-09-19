@@ -1,0 +1,25 @@
+#!/bin/bash
+first_node={{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}
+hostname=`hostname`
+
+if [[ $first_node == $hostname ]]; then
+    zk_cnt=`ps -eo cmd |grep 'QuorumPeerMain'|egrep -v 'grep' |wc -l`
+    if [[ $zk_cnt -eq 0 ]]; then
+        su - trafodion -c "/opt/zookeeper/bin/zookeeper-server start"
+    fi
+
+    hive_cnt=`ps -eo cmd |grep 'HiveMetaStore'|egrep -v 'grep' |wc -l`
+    if [[ $hive_cnt -eq 0 ]]; then
+        su - trafodion -c "nohup /opt/hive/bin/hive --service metastore > /var/log/hive/hive_metastore.log 2>&1 &"
+    fi
+
+    rs_cnt=`ps -eo cmd |grep 'HRegionServer'|egrep -v 'grep' |wc -l`
+    if [[ $rs_cnt -eq 0 ]]; then
+        su - trafodion -c "/opt/hbase/bin/start-hbase.sh"
+    fi
+
+    mon_cnt=`ps -eo cmd |grep 'monitor COLD'|egrep -v 'grep|mpirun' |wc -l`
+    if [[ $mon_cnt -eq 0 ]]; then
+        su - trafodion -c "sqstart"
+    fi
+fi

@@ -1,0 +1,9 @@
+[template]                                                                                                                                                                                                 
+src = "core-site.xml.tmpl"
+dest = "/opt/hadoop/etc/hadoop/core-site.xml"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]
+reload_cmd = "/opt/hadoop/sbin/restart-dfs.sh"

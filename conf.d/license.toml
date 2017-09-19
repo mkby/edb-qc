@@ -1,0 +1,8 @@
+[template]
+src = "license.tmpl"
+dest = "/etc/trafodion/esgyndb_license"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]

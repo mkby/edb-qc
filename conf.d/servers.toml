@@ -1,0 +1,9 @@
+[template]
+src = "servers.tmpl"
+dest = "/opt/trafodion/esgynDB-2.3.0/dcs-2.3.0/conf/servers"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]
+reload_cmd="/opt/bin/restart-dcs.sh"

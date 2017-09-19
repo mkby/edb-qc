@@ -1,0 +1,2 @@
+{{range $dir := lsdir "/hosts/datanode/"}}{{$node := printf "/hosts/datanode/%s/instance_id" $dir}}
+{{getv $node}}{{end}}

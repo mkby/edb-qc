@@ -1,0 +1,8 @@
+[template]                                                                                                                                                      
+src = "regionservers.tmpl"
+dest = "/opt/hbase/conf/regionservers"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]

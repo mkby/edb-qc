@@ -1,0 +1,62 @@
+{
+    "name": {{cluster.name}},
+    "description": {{cluster.description}},
+    "vxnet": {{cluster.vxnet}},
+    "nodes": [{
+      "role":"datanode",
+        "container": {
+            "type": "kvm",
+            "zone": "sh1a",
+            "image": "img-y1e3320k"
+        },
+
+        "instance_class": {{cluster.datanode.instance_class}},
+        "passphraseless": "ssh-rsa",
+        "count": {{cluster.datanode.count}},
+        "cpu": {{cluster.datanode.cpu}},
+        "memory": {{cluster.datanode.memory}},
+        "volume": {
+            "size": {{cluster.datanode.volume_size}},
+            "mount_point": "/data",
+            "filesystem": "ext4"
+        },
+        "user_access": true,
+        "services": {
+            "init": {
+                "cmd":"/opt/bin/init.sh"
+            },
+            "start": {
+                "cmd":"/opt/bin/start.sh"
+            },
+            "stop": {
+                "cmd": "/opt/bin/stop.sh"
+            },
+            "restart": {
+                "cmd": "/opt/bin/restart.sh"
+            }
+
+        },
+        "health_check": {
+             "enable": true,
+             "interval_sec": 60,
+             "timeout_sec": 10,
+             "action_timeout_sec": 30,
+             "healthy_threshold": 2,
+             "unhealthy_threshold": 2,
+             "check_cmd": "/opt/bin/health-check.sh",
+             "action_cmd": "/opt/bin/health-action.sh"
+        }
+    }],
+    "env": {
+      "dbmgr.http.port": {{env.dbmgr.http.port}},
+      "dcs.servers.per.node": {{env.dcs.servers.per.node}},
+      "dcs.master.port": {{env.dcs.master.port}},
+      "dcs.master.info.port": {{env.dcs.master.info.port}}
+    },
+    "endpoints": {
+        "JDBC/ODBC Connection": {
+            "port": "env.dcs.master.port",
+            "protocol": "tcp"
+        }
+    }
+}

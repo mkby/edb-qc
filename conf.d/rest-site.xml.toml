@@ -1,0 +1,8 @@
+[template]
+src = "rest-site.xml.tmpl"
+dest = "/opt/trafodion/esgynDB-2.3.0/rest-2.3.0/conf/rest-site.xml"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]

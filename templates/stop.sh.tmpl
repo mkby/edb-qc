@@ -1,0 +1,12 @@
+#!/bin/bash
+
+first_node={{$nodes := lsdir "/hosts/datanode"}}{{index $nodes 0}}
+hostname=`hostname`
+
+if [[ $first_node == $hostname ]]; then
+    su - trafodion -c "echo y | ckillall"
+    ps -ef|grep HiveMetaStore|grep -v grep|awk '{print $2}'|xargs kill -9
+    su - trafodion -c "/opt/hbase/bin/stop-hbase.sh"
+    su - trafodion -c "/opt/hadoop/sbin/stop-dfs.sh"
+    su - trafodion -c "/opt/zookeeper/bin/zookeeper-server stop"
+fi

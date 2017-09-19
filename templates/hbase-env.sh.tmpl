@@ -1,0 +1,4 @@
+export HBASE_OPTS="-XX:+UseConcMarkSweepGC"
+{{$mem := getv "/host/memory"}}
+export HBASE_HEAPSIZE={{div $mem 4}}M
+export HBASE_MANAGES_ZK=false

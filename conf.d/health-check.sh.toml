@@ -1,0 +1,7 @@
+[template]
+src = "health-check.sh.tmpl"
+dest = "/opt/bin/health-check.sh"
+mode = "0755"
+keys = [
+    "/",
+]

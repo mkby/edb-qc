@@ -1,0 +1,9 @@
+[template]
+src = "config.xml.tmpl"
+dest = "/opt/trafodion/esgynDB-2.3.0/dbmgr-2.3.0/conf/config.xml"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]
+reload_cmd="/opt/bin/restart-dbmgr.sh"

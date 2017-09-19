@@ -1,0 +1,2 @@
+{{range $dir := lsdir "/hosts/datanode/"}}{{$pub_key := printf "/hosts/datanode/%s/pub_key" $dir}}
+{{getv $pub_key}}{{end}}

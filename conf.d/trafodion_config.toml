@@ -1,0 +1,8 @@
+[template]
+src = "trafodion_config.tmpl"
+dest = "/etc/trafodion/trafodion_config"
+uid = 500
+gid = 500
+keys = [
+  "/",
+]
