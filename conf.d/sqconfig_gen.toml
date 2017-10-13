@@ -1,0 +1,9 @@
+[template]
+src = "sqconfig_gen.tmpl"
+dest = "/opt/bin/sqconfig_gen"
+uid = 500
+gid = 500
+mode = "0755"
+keys = [
+  "/",
+]

@@ -1,8 +1,0 @@
-[template]
-src = "sqconfig.tmpl"
-dest = "/opt/trafodion/esgynDB-2.3.0/sql/scripts/sqconfig"
-uid = 500
-gid = 500
-keys = [
-  "/",
-]

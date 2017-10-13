@@ -15,6 +15,7 @@ if [[ $first_node == $hostname ]]; then
     fi
 
     if [[ ! -e /opt/trafodion/esgynDB-2.3.0/sql/scripts/sqconfig.db ]]; then
+        su - trafodion -c /opt/bin/sqconfig_gen
         su - trafodion -c sqgen
     fi
 

@@ -1,8 +1,0 @@
-begin node
-{{range $dir := lsdir "/hosts/datanode/"}}{{$node := printf "/hosts/datanode/%s/instance_id" $dir}}{{$sid := printf "/hosts/datanode/%s/sid" $dir}}{{$cpu := printf "/hosts/datanode/%s/cpu" $dir}}{{$nid := getv $sid}}
-node-id={{sub $nid 1}};node-name={{getv $node}};cores=0-3;processors={{getv $cpu}};roles=connection,aggregation,storage{{end}}
-end node
-
-begin overflow
-hdd /data/overflow
-end overflow

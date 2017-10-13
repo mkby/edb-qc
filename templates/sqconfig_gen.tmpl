@@ -1,0 +1,16 @@
+#!/bin/bash
+nodes='{{range $dir := lsdir "/hosts/datanode/"}}{{$node := printf "/hosts/datanode/%s/instance_id" $dir}}{{getv $node}} {{end}}'
+cpu='{{getv "/host/cpu"}}'
+
+SQCONFIG_FILE="/opt/trafodion/esgynDB-2.3.0/sql/scripts/sqconfig"
+echo "begin node" > $SQCONFIG_FILE
+nid=0
+for node in $nodes; do
+    echo "node-id=$nid;node-name=$node;cores=0-3;processors=$cpu;roles=connection,aggregation,storage" >> $SQCONFIG_FILE
+    let nid=$nid+1
+done
+
+echo "end node" >> $SQCONFIG_FILE
+echo "begin overflow" >> $SQCONFIG_FILE
+echo "hdd /data/overflow" >> $SQCONFIG_FILE
+echo "end overflow" >> $SQCONFIG_FILE
